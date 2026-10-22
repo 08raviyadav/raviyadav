@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ravi Yadav — Builder of NepPay, SkillVet & CtrlZ</title>
+<meta name="description" content="Ravi Yadav (thor) — developer from Nepal building open-source tools: NepPay (payments for Nepal), SkillVet (AI skill security scanner), CtrlZ (undo for AI agents), and Aura Scanner.">
+<meta property="og:title" content="Ravi Yadav — Open-Source Builder">
+<meta property="og:description" content="Building NepPay, SkillVet & CtrlZ in the open, from Nepal.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://raviyadav.com.np">
+<style>
+  :root{
+    --bg:#07090f; --bg2:#0b0f1a; --card:#0e1424; --line:#1c2740;
+    --text:#e8edf7; --muted:#94a3c0; --accent:#6e7cff; --accent2:#22d3ee;
+    --green:#34d399; --radius:18px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.6;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .glow{position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(600px 400px at 15% -5%,rgba(110,124,255,.22),transparent 60%),
+               radial-gradient(700px 500px at 90% 10%,rgba(34,211,238,.12),transparent 60%),
+               radial-gradient(800px 600px at 50% 110%,rgba(52,211,153,.08),transparent 60%)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+  .logo{font-weight:800;font-size:1.25rem;letter-spacing:.3px}
+  .logo span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  nav .links{display:flex;gap:26px;color:var(--muted);font-size:.95rem}
+  nav .links a:hover{color:var(--text)}
+  .hero{padding:72px 0 40px;text-align:left}
+  .badge{display:inline-block;padding:6px 14px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.85rem;background:rgba(255,255,255,.02)}
+  .badge b{color:var(--green);font-weight:600}
+  h1{font-size:clamp(2.6rem,6.5vw,4.4rem);line-height:1.05;font-weight:900;letter-spacing:-1px;margin:22px 0 6px}
+  h1 .grad{background:linear-gradient(92deg,var(--accent),var(--accent2) 55%,var(--green));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .tagline{font-size:clamp(1.15rem,2.6vw,1.5rem);color:var(--text);font-weight:600;margin-top:10px}
+  .sub{color:var(--muted);max-width:640px;margin-top:14px;font-size:1.05rem}
+  .cta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
+  .btn{padding:13px 26px;border-radius:12px;font-weight:700;font-size:.98rem;transition:transform .15s ease,box-shadow .15s ease}
+  .btn.primary{background:linear-gradient(92deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 8px 30px rgba(110,124,255,.35)}
+  .btn.primary:hover{transform:translateY(-2px)}
+  .btn.ghost{border:1px solid var(--line);color:var(--text);background:rgba(255,255,255,.02)}
+  .btn.ghost:hover{border-color:var(--accent)}
+  .stats{display:flex;gap:38px;margin-top:48px;flex-wrap:wrap}
+  .stat .num{font-size:1.7rem;font-weight:800}
+  .stat .lbl{color:var(--muted);font-size:.88rem}
+  section{padding:64px 0 8px}
+  h2{font-size:1.9rem;font-weight:800;letter-spacing:-.5px;margin-bottom:8px}
+  h2 .grad{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sec-sub{color:var(--muted);margin-bottom:30px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+  .card{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:var(--radius);padding:26px;transition:transform .18s ease,border-color .18s ease}
+  .card:hover{transform:translateY(-5px);border-color:var(--accent)}
+  .card .icon{font-size:1.9rem}
+  .card h3{font-size:1.25rem;margin:12px 0 6px;font-weight:800}
+  .card h3 a:hover{color:var(--accent2)}
+  .card p{color:var(--muted);font-size:.96rem}
+  .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+  .tag{font-size:.75rem;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+  .card .repo{display:inline-block;margin-top:16px;font-weight:700;color:var(--accent2);font-size:.92rem}
+  .card .repo:hover{text-decoration:underline}
+  .skills{display:flex;gap:10px;flex-wrap:wrap}
+  .skill{padding:9px 16px;border-radius:999px;background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:.92rem}
+  .about p{color:var(--muted);max-width:720px;margin-bottom:14px}
+  .about p b{color:var(--text)}
+  footer{margin-top:80px;border-top:1px solid var(--line);padding:34px 0 44px;color:var(--muted);font-size:.92rem;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  footer a{color:var(--accent2)}
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (max-width:640px){ nav .links{display:none} .hero{padding-top:44px} }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="wrap">
+
+  <nav>
+    <div class="logo">ravi<span>yadav</span>.com.np</div>
+    <div class="links">
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#about">About</a>
+      <a href="https://github.com/08raviyadav" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <span class="badge">🇳🇵 Building in the open, from Nepal · <b>3 projects shipped in 2026</b></span>
+    <h1>Hi, I'm Ravi Yadav.<br>I build <span class="grad">open-source tools</span> people actually need.</h1>
+    <p class="tagline">Payments for Nepal. Safety nets for AI agents. Security for the skill ecosystem.</p>
+    <p class="sub">Developer &amp; indie builder. I take big, annoying problems — clunky payments, destructive AI agents, untrusted AI skills — and ship radically simple, open-source fixes.</p>
+    <div class="cta">
+      <a class="btn primary" href="#projects">See my projects</a>
+      <a class="btn ghost" href="https://github.com/08raviyadav" target="_blank" rel="noopener">github.com/08raviyadav</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="num">4+</div><div class="lbl">Open-source projects</div></div>
+      <div class="stat"><div class="num">2019</div><div class="lbl">On GitHub since</div></div>
+      <div class="stat"><div class="num">MIT</div><div class="lbl">Everything open-licensed</div></div>
+      <div class="stat"><div class="num">0</div><div class="lbl">Dependencies (where it counts)</div></div>
+    </div>
+  </header>
+
+  <section id="projects">
+    <h2>Featured <span class="grad">projects</span></h2>
+    <p class="sec-sub">Real tools, live on GitHub — go star, fork, or break them.</p>
+    <div class="grid">
+
+      <article class="card reveal">
+        <div class="icon">💸</div>
+        <h3><a href="https://github.com/08raviyadav/Neppay" target="_blank" rel="noopener">NepPay</a></h3>
+        <p>A GPay-smooth payment app for Nepal, built on Nepal's own rails — NEPALPAY QR, FonePay QR and NPI. Flutter app + a double-entry ledger backend where a retry can never double-charge.</p>
+        <div class="tags"><span class="tag">Flutter</span><span class="tag">Node.js</span><span class="tag">Fintech</span><span class="tag">QR Payments</span></div>
+        <a class="repo" href="https://github.com/08raviyadav/Neppay" target="_blank" rel="noopener">View repository →</a>
+      </article>
+
+      <article class="card reveal">
+        <div class="icon">🩺</div>
+        <h3><a href="https://github.com/08raviyadav/skillvet" target="_blank" rel="noopener">SkillVet</a></h3>
+        <p>Vet AI agent skills before you install them. A zero-dependency scanner that flags prompt injection, secret theft, and <i>curl | sh</i> in skills &amp; MCP configs — with a 0–100 score and a GitHub Action.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Security</span><span class="tag">AI Agents</span><span class="tag">MCP</span></div>
+        <a class="repo" href="https://github.com/08raviyadav/skillvet" target="_blank" rel="noopener">View repository →</a>
+      </article>
+
+      <article class="card reveal">
+        <div class="icon">⌨️</div>
+        <h3><a href="https://github.com/08raviyadav/ctrlz" target="_blank" rel="noopener">CtrlZ</a></h3>
+        <p>Ctrl+Z for AI agents. Filesystem-level snapshots that undo <i>everything</i> an agent did — including bash <i>rm</i>, subagent edits, and deleted .env files that built-in checkpoints never see.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">CLI</span><span class="tag">DevTools</span><span class="tag">AI Safety</span></div>
+        <a class="repo" href="https://github.com/08raviyadav/ctrlz" target="_blank" rel="noopener">View repository →</a>
+      </article>
+
+      <article class="card reveal">
+        <div class="icon">✨</div>
+        <h3>Aura Scanner</h3>
+        <p>A for-fun Android app: snap a selfie, get your aura score, aura type, and a loving roast — with shareable result cards. 100% offline, no login, built with Kotlin + Jetpack Compose.</p>
+        <div class="tags"><span class="tag">Kotlin</span><span class="tag">Android</span><span class="tag">Jetpack Compose</span></div>
+        <span class="repo">Coming to the Play Store</span>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>What I <span class="grad">build with</span></h2>
+    <p class="sec-sub">The toolbox — picked for shipping fast and keeping things simple.</p>
+    <div class="skills">
+      <span class="skill">Flutter / Dart</span>
+      <span class="skill">Kotlin · Jetpack Compose</span>
+      <span class="skill">Python</span>
+      <span class="skill">Node.js</span>
+      <span class="skill">TypeScript</span>
+      <span class="skill">Android</span>
+      <span class="skill">REST APIs</span>
+      <span class="skill">Git &amp; GitHub</span>
+      <span class="skill">AI tooling &amp; agents</span>
+      <span class="skill">Open-source tooling</span>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <h2>About <span class="grad">me</span></h2>
+    <p>I'm <b>Ravi Yadav</b> — most people online know me as <b>thor</b>. I'm a developer from <b>Nepal</b> who believes good tools should be open, honest, and radically simple.</p>
+    <p>My current obsessions: making payments in Nepal feel world-class (<b>NepPay</b>), making AI agents safe to unleash (<b>CtrlZ</b>), and making the agent-skill ecosystem trustworthy (<b>SkillVet</b>). Everything I ship is MIT-licensed — use it, fork it, ship it.</p>
+    <p>Want to collaborate, contribute, or just talk shop? Find me on GitHub — I answer every issue and PR.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/08raviyadav" target="_blank" rel="noopener">Follow me on GitHub</a>
+    </div>
+  </section>
+
+  <footer>
+    <div>© 2026 Ravi Yadav · raviyadav.com.np · Built with plain HTML/CSS/JS — no build step, no trackers.</div>
+    <div><a href="https://github.com/08raviyadav" target="_blank" rel="noopener">GitHub</a></div>
+  </footer>
+
+</div>
+<script>
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold: .12});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+</script>
+</body>
+</html>

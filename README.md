@@ -1,27 +1,42 @@
-# Test1
+<div align="center">
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.3.
+# Hey, I'm Ravi Yadav 👋
 
-## Development server
+**Open-source builder from Nepal 🇳🇵 — I ship radically simple tools for big, annoying problems.**
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+[![Website](https://img.shields.io/badge/website-raviyadav.com.np-blue)](https://raviyadav.com.np)
+[![GitHub](https://img.shields.io/badge/GitHub-08raviyadav-181717?logo=github)](https://github.com/08raviyadav)
 
-## Code scaffolding
+</div>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+---
 
-## Build
+## 🚀 What I'm building
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+| Project | What it does |
+|---|---|
+| 💸 **[NepPay](https://github.com/08raviyadav/Neppay)** | A GPay-smooth payment app for Nepal on NEPALPAY QR, FonePay QR & NPI rails. Flutter + double-entry ledger backend — a retry can never double-charge. |
+| 🩺 **[SkillVet](https://github.com/08raviyadav/skillvet)** | Vet AI agent skills before you install them. Zero-dependency scanner for prompt injection, secret theft & `curl \| sh` in skills/MCP configs — score, grade, GitHub Action. |
+| ⌨️ **[CtrlZ](https://github.com/08raviyadav/ctrlz)** | Ctrl+Z for AI agents. Filesystem-level undo for *everything* an agent did — bash `rm`, subagent edits, deleted `.env` files that built-in checkpoints never see. |
+| ✨ **Aura Scanner** | For-fun Android aura reader (Kotlin + Jetpack Compose). Selfie in → aura score, type & roast out. 100% offline. Coming to the Play Store. |
 
-## Running unit tests
+## 🛠️ Toolbox
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Flutter · Kotlin / Jetpack Compose · Python · Node.js · TypeScript · Android · REST APIs · Git/GitHub · AI agent tooling
 
-## Running end-to-end tests
+## 🌱 Philosophy
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+- Take the problem down to first principles, then build the simplest thing that solves it
+- Zero dependencies where it counts — tools you can read in one sitting
+- Open source, MIT everything: use it, fork it, ship it
 
-## Further help
+## 📫 Find me
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+- 🌐 [raviyadav.com.np](https://raviyadav.com.np)
+- 💻 GitHub — you're looking at it. Issues and PRs always answered.
+
+<div align="center">
+
+*Building in the open, from Nepal, since 2019.*
+
+</div>
