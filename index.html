@@ -128,6 +128,8 @@
       <a href="#opensource">Open Source</a>
       <a href="#skills">Skills</a>
       <a href="#qualifications">Qualifications</a>
+      <a href="#cases">Case Studies</a>
+      <a href="#resume">Resume</a>
       <a href="#playground">Playground</a>
       <a href="#about">About</a>
       <a href="https://github.com/08raviyadav" target="_blank" rel="noopener">GitHub ↗</a>
@@ -136,12 +138,14 @@
   </nav>
 
   <header class="hero">
-    <span class="badge">🇳🇵 Building in the open, from Nepal · <b>4 projects shipped in 2026</b></span>
+    <span class="badge">🇳🇵 Building in the open, from Nepal · <b>4 projects shipped in 2026</b> · <b>Available for Mid-Level Developer roles</b></span>
     <h1>Hi, I'm Ravi Yadav.<br>I build <span class="grad">open-source tools</span> people actually need.</h1>
     <p class="tagline">Payments for Nepal. Safety nets for AI agents. Security for the skill ecosystem.</p>
     <p class="sub">Developer &amp; indie builder. I take big, annoying problems — clunky payments, destructive AI agents, untrusted AI skills — and ship radically simple, open-source fixes.</p>
+    <p class="sub" style="margin-top:8px">🟢 <b style="color:var(--text)">Open to work</b> — Mid-Level Developer roles, fintech and AI-safety teams. See the <a href="#cases" style="color:var(--accent2)">case studies</a> below for what shipping with me looks like.</p>
     <div class="cta">
       <a class="btn primary" href="#projects">See my projects</a>
+      <a class="btn ghost" href="resume.html">Download resume</a>
       <a class="btn ghost" href="https://github.com/08raviyadav" target="_blank" rel="noopener">github.com/08raviyadav</a>
     </div>
     <div class="stats">
@@ -261,6 +265,45 @@
     </div>
   </section>
 
+  <section id="cases">
+    <h2>Case <span class="grad">studies</span></h2>
+    <p class="sec-sub">What shipping with me looks like — problem, fix, result.</p>
+    <div class="grid">
+      <article class="card reveal">
+        <div class="icon">🏆</div>
+        <h3>Graphify — the fix that shipped on PyPI</h3>
+        <p><b style="color:var(--text)">Problem:</b> MySQL/MariaDB <i>CREATE TABLE</i> statements with <i>DEFAULT current_timestamp()</i> were silently dropped — the SQL parser hit an ERROR node and threw away the whole table.</p>
+        <p style="margin-top:10px"><b style="color:var(--text)">What I did:</b> Traced it to the tree-sitter-sql grammar handling of the parenthesised default, fixed the root cause (not a workaround), and added regression tests proving the table now parses.</p>
+        <p style="margin-top:10px"><b style="color:var(--text)">Result:</b> Maintainer cherry-picked the fix into <b>graphify 0.9.95 on PyPI</b> — "cherry-picked to preserve your authorship." My commit is on upstream main.</p>
+        <a class="repo" href="https://github.com/Graphify-Labs/graphify/pull/4677" target="_blank" rel="noopener">View pull request →</a>
+      </article>
+      <article class="card reveal">
+        <div class="icon">💸</div>
+        <h3>NepPay — payments that never double-charge</h3>
+        <p><b style="color:var(--text)">Problem:</b> Payments in Nepal feel clunky compared to GPay/PhonePe — and a retried payment must never charge twice.</p>
+        <p style="margin-top:10px"><b style="color:var(--text)">What I did:</b> Built a Flutter app on Nepal's own rails (NEPALPAY QR, FonePay QR, NPI) with an EMVCo QR parser and a Node.js double-entry ledger backend — every payment carries an idempotency key, so a retry returns the same transaction instead of a second charge.</p>
+        <p style="margin-top:10px"><b style="color:var(--text)">Result:</b> A working V0 prototype, open source, with the retry-safety proven live: same key, same transaction, charged once.</p>
+        <a class="repo" href="https://github.com/08raviyadav/Neppay" target="_blank" rel="noopener">View repository →</a>
+      </article>
+    </div>
+  </section>
+
+  <section id="resume">
+    <h2>Resume — <span class="grad">the short version</span></h2>
+    <p class="sec-sub">One page. No fluff. Contact through GitHub — I answer every issue and PR.</p>
+    <div class="card reveal">
+      <h3 style="margin-top:0">Ravi Yadav · Developer, Nepal</h3>
+      <p><b style="color:var(--text)">Education:</b> BCA, Lovely Professional University, India — 2020, CGPA 7.30.</p>
+      <p style="margin-top:8px"><b style="color:var(--text)">Building since 2019:</b> NepPay (payments for Nepal), SkillVet (AI skill security), CtrlZ (undo for AI agents), ProofLog (tamper-evident audit log), Aura Scanner (Android).</p>
+      <p style="margin-top:8px"><b style="color:var(--text)">Open source:</b> fix landed in Graphify 0.9.95 on PyPI; security &amp; bug-fix PRs open at ColossalAI, ECC, ponytail, nanobot, FastMCP, hermes-agent and portless.</p>
+      <p style="margin-top:8px"><b style="color:var(--text)">Stack:</b> Flutter/Dart · Kotlin · Python · Node.js · TypeScript · Android · REST APIs · Git/GitHub.</p>
+      <div class="cta">
+        <a class="btn primary" href="resume.html">Download resume</a>
+        <a class="btn ghost" href="https://github.com/08raviyadav" target="_blank" rel="noopener">Contact via GitHub</a>
+      </div>
+    </div>
+  </section>
+
   <section id="playground">
     <h2>Playground — <span class="grad">have a go</span></h2>
     <p class="sec-sub">A tiny game, built into the site. Arrow keys or WASD — or tap the pad on your phone.</p>
@@ -354,6 +397,10 @@ var SEARCH_INDEX = [
   {t:"Open-source developer since 2019", k:"Qualification", d:"Building in public on GitHub since 2019, one fix landed on PyPI.", target:"#qualifications"},
   {t:"Indie builder", k:"Qualification", d:"Shipped NepPay, SkillVet, CtrlZ and ProofLog in 2026, plus Aura Scanner.", target:"#qualifications"},
   {t:"About Ravi", k:"About", d:"Ravi Yadav, known as thor — developer from Nepal. Everything MIT-licensed.", target:"#about"},
+  {t:"Resume — download", k:"Resume", d:"One-page resume: BCA 2020, projects, open-source work. Contact via GitHub only.", target:"#resume"},
+  {t:"Case study: Graphify fix shipped on PyPI", k:"Case study", d:"MySQL CREATE TABLE fix cherry-picked into graphify 0.9.95 — problem, fix, result.", target:"#cases"},
+  {t:"Case study: NepPay never double-charges", k:"Case study", d:"Flutter payments on Nepal rails with a double-entry ledger and idempotency keys.", target:"#cases"},
+  {t:"Open to work — Mid-Level Developer roles", k:"Hiring", d:"Available for Mid-Level Developer roles, fintech and AI-safety teams.", target:"#resume"},
   {t:"Contact — GitHub", k:"Contact", d:"Find Ravi on GitHub — github.com/08raviyadav. He answers every issue and PR.", target:"#about"}
 ];
 var palette = document.getElementById('palette');
@@ -503,11 +550,13 @@ document.addEventListener('keydown', function(e){
     {keys:['bca','degree','education','university','qualification','college','cgpa','study'], a:'Ravi holds a <b>BCA (Bachelor of Computer Applications)</b> from Lovely Professional University, Phagwara, Punjab, India — completed 2020, CGPA 7.30.'},
     {keys:['experience','since','how long','background'], a:'Ravi has been building in public on GitHub since <b>2019</b>, and shipped NepPay, SkillVet, CtrlZ and ProofLog as open-source projects in 2026.'},
     {keys:['contact','email','hire','collaborat','talk','reach','message'], a:'The best way to reach Ravi is on GitHub — <a href="https://github.com/08raviyadav" target="_blank" rel="noopener">github.com/08raviyadav</a>. He answers every issue and PR.'},
+    {keys:['available','open to work','hiring','job','role','position'], a:'Yes — Ravi is <b>open to work</b>: Mid-Level Developer roles, fintech and AI-safety teams. See the case studies on this page for what shipping with him looks like, and the Resume section for the one-page version.'},
+    {keys:['resume','cv','download'], a:'Ravi\u2019s one-page resume is on this site — see the <b>Resume</b> section, or download it from the button there. It covers his BCA, his projects and his open-source work. Contact is via GitHub.'},
     {keys:['who','about','thor','ravi','yourself'], a:'Ravi Yadav — online as <b>thor</b> — is a developer from Nepal who builds open-source tools: payments for Nepal (NepPay), safety nets for AI agents (CtrlZ) and security for the skill ecosystem (SkillVet). Everything MIT-licensed.'},
     {keys:['game','snake','play','fun'], a:'There\u2019s a Snake game in the Playground section above — arrow keys or WASD, or the on-screen pad on your phone. Your best score is saved in your browser.'},
     {keys:['hello','hi','hey','namaste'], a:'Namaste! Ask me about Ravi\u2019s projects, skills, qualifications or open-source work — or try a chip below.'}
   ];
-  var CHIP_QS = ['What is NepPay?', 'What skills does Ravi have?', 'What is his qualification?', 'How do I contact him?'];
+  var CHIP_QS = ['What is NepPay?', 'What skills does Ravi have?', 'What is his qualification?', 'Are you open to work?'];
   function addMsg(html, who){
     var d = document.createElement('div');
     d.className = 'msg ' + who; d.innerHTML = html;
