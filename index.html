@@ -24,11 +24,14 @@
                radial-gradient(700px 500px at 90% 10%,rgba(34,211,238,.12),transparent 60%),
                radial-gradient(800px 600px at 50% 110%,rgba(52,211,153,.08),transparent 60%)}
   .wrap{max-width:1080px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
-  nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;gap:14px}
   .logo{font-weight:800;font-size:1.25rem;letter-spacing:.3px}
   .logo span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
-  nav .links{display:flex;gap:26px;color:var(--muted);font-size:.95rem}
+  nav .links{display:flex;gap:26px;color:var(--muted);font-size:.95rem;align-items:center}
   nav .links a:hover{color:var(--text)}
+  .search-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.03);color:var(--muted);font-size:.9rem;cursor:pointer;font-family:inherit}
+  .search-btn:hover{border-color:var(--accent);color:var(--text)}
+  .search-btn kbd{font-family:inherit;font-size:.72rem;border:1px solid var(--line);border-radius:6px;padding:1px 6px;color:var(--muted)}
   .hero{padding:72px 0 40px;text-align:left}
   .badge{display:inline-block;padding:6px 14px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.85rem;background:rgba(255,255,255,.02)}
   .badge b{color:var(--green);font-weight:600}
@@ -68,7 +71,50 @@
   footer a{color:var(--accent2)}
   .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
   .reveal.in{opacity:1;transform:none}
-  @media (max-width:640px){ nav .links{display:none} .hero{padding-top:44px} }
+  /* --- search palette --- */
+  .palette{position:fixed;inset:0;background:rgba(4,6,12,.72);backdrop-filter:blur(3px);z-index:50;display:none;align-items:flex-start;justify-content:center;padding:14vh 18px 18px}
+  .palette.open{display:flex}
+  .palette-box{width:100%;max-width:560px;background:var(--bg2);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .palette-box input{width:100%;padding:16px 18px;font-size:1.05rem;background:transparent;border:none;border-bottom:1px solid var(--line);color:var(--text);outline:none;font-family:inherit}
+  .palette-results{max-height:320px;overflow:auto;padding:8px}
+  .palette-results .res{display:block;padding:11px 12px;border-radius:10px;cursor:pointer}
+  .palette-results .res:hover,.palette-results .res.active{background:rgba(110,124,255,.14)}
+  .palette-results .res .t{font-weight:700;font-size:.98rem}
+  .palette-results .res .k{font-size:.75rem;color:var(--accent2);text-transform:uppercase;letter-spacing:.5px}
+  .palette-results .res .d{color:var(--muted);font-size:.88rem}
+  .palette-results .none{padding:18px 12px;color:var(--muted);font-size:.95rem}
+  .palette-hint{padding:9px 16px;color:var(--muted);font-size:.78rem;border-top:1px solid var(--line)}
+  /* --- playground / snake --- */
+  .game-card{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
+  .game-card canvas{background:#05070d;border:1px solid var(--line);border-radius:14px;display:block;max-width:100%}
+  .game-side{min-width:200px;flex:1}
+  .game-side .score{font-size:2rem;font-weight:800}
+  .game-side .score small{display:block;font-size:.85rem;color:var(--muted);font-weight:400}
+  .pad{display:grid;grid-template-columns:repeat(3,52px);gap:6px;margin-top:16px}
+  .pad button{padding:12px 0;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);border-radius:10px;font-size:1.1rem;cursor:pointer;font-family:inherit}
+  .pad button:hover{border-color:var(--accent)}
+  /* --- Ask Ravi chat --- */
+  .chat-fab{position:fixed;right:20px;bottom:20px;z-index:40;width:58px;height:58px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:1.5rem;cursor:pointer;box-shadow:0 10px 30px rgba(110,124,255,.45)}
+  .chat-panel{position:fixed;right:20px;bottom:90px;z-index:40;width:min(360px,calc(100vw - 40px));height:480px;max-height:calc(100vh - 120px);background:var(--bg2);border:1px solid var(--line);border-radius:18px;display:none;flex-direction:column;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .chat-panel.open{display:flex}
+  .chat-head{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+  .chat-head b{font-size:1rem}
+  .chat-head span{display:block;font-size:.78rem;color:var(--muted)}
+  .chat-head button{background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer}
+  .chat-log{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+  .msg{max-width:85%;padding:10px 13px;border-radius:14px;font-size:.92rem;line-height:1.5}
+  .msg.bot{background:rgba(110,124,255,.14);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
+  .msg.user{background:linear-gradient(92deg,var(--accent),var(--accent2));color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+  .msg a{color:var(--accent2);text-decoration:underline}
+  .msg.user a{color:#fff}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;padding:0 14px 10px}
+  .chips button{font-size:.8rem;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted);cursor:pointer;font-family:inherit}
+  .chips button:hover{color:var(--text);border-color:var(--accent)}
+  .chat-input{display:flex;border-top:1px solid var(--line)}
+  .chat-input input{flex:1;padding:13px 14px;background:transparent;border:none;color:var(--text);outline:none;font-family:inherit;font-size:.95rem}
+  .chat-input button{padding:0 18px;background:none;border:none;color:var(--accent2);font-weight:700;cursor:pointer;font-family:inherit}
+  .chat-note{padding:8px 14px;font-size:.72rem;color:var(--muted);border-top:1px solid var(--line)}
+  @media (max-width:640px){ nav .links{display:none} .hero{padding-top:44px} .search-btn{margin-left:auto} }
 </style>
 </head>
 <body>
@@ -81,13 +127,16 @@
       <a href="#projects">Projects</a>
       <a href="#opensource">Open Source</a>
       <a href="#skills">Skills</a>
+      <a href="#qualifications">Qualifications</a>
+      <a href="#playground">Playground</a>
       <a href="#about">About</a>
       <a href="https://github.com/08raviyadav" target="_blank" rel="noopener">GitHub ↗</a>
     </div>
+    <button class="search-btn" id="searchBtn" type="button" aria-label="Search this site">🔍 Search <kbd>Ctrl K</kbd></button>
   </nav>
 
   <header class="hero">
-    <span class="badge">🇳🇵 Building in the open, from Nepal · <b>3 projects shipped in 2026</b></span>
+    <span class="badge">🇳🇵 Building in the open, from Nepal · <b>4 projects shipped in 2026</b></span>
     <h1>Hi, I'm Ravi Yadav.<br>I build <span class="grad">open-source tools</span> people actually need.</h1>
     <p class="tagline">Payments for Nepal. Safety nets for AI agents. Security for the skill ecosystem.</p>
     <p class="sub">Developer &amp; indie builder. I take big, annoying problems — clunky payments, destructive AI agents, untrusted AI skills — and ship radically simple, open-source fixes.</p>
@@ -167,7 +216,7 @@
       </article>
 
     </div>
-    <p class="sec-sub" style="margin-top:20px">Also contributing: security &amp; bug-fix PRs at <b>ColossalAI</b>, <b>ECC</b>, <b>ponytail</b>, <b>nanobot</b> (×2), <b>FastMCP</b>, <b>LangGraph</b> and <b>hermes-agent</b>.</p>
+    <p class="sec-sub" style="margin-top:20px">Also contributing: security &amp; bug-fix PRs at <b>ColossalAI</b>, <b>ECC</b>, <b>ponytail</b>, <b>nanobot</b> (×2), <b>FastMCP</b>, <b>hermes-agent</b> and <b>portless</b>.</p>
   </section>
 
   <section id="skills">
@@ -187,6 +236,52 @@
     </div>
   </section>
 
+  <section id="qualifications">
+    <h2>Qualifications &amp; <span class="grad">experience</span></h2>
+    <p class="sec-sub">The paper trail — and the work behind it.</p>
+    <div class="grid">
+      <article class="card reveal">
+        <div class="icon">🎓</div>
+        <h3>Bachelor of Computer Applications (BCA)</h3>
+        <p>Lovely Professional University, Phagwara, Punjab, India. Completed 2020 · CGPA 7.30.</p>
+        <div class="tags"><span class="tag">BCA</span><span class="tag">2020</span><span class="tag">CGPA 7.30</span></div>
+      </article>
+      <article class="card reveal">
+        <div class="icon">💻</div>
+        <h3>Open-source developer since 2019</h3>
+        <p>Building in public on GitHub since 2019. One fix landed in production (Graphify 0.9.95 on PyPI), with security &amp; bug-fix PRs open across ColossalAI, ECC, ponytail, nanobot, FastMCP, hermes-agent and portless.</p>
+        <div class="tags"><span class="tag">GitHub since 2019</span><span class="tag">Open Source</span></div>
+      </article>
+      <article class="card reveal">
+        <div class="icon">📱</div>
+        <h3>Indie builder</h3>
+        <p>Shipped NepPay, SkillVet, CtrlZ and ProofLog as open-source projects in 2026, plus Aura Scanner for Android. Flutter, Kotlin and Python — always MIT-licensed, always in the open.</p>
+        <div class="tags"><span class="tag">Flutter</span><span class="tag">Kotlin</span><span class="tag">Python</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="playground">
+    <h2>Playground — <span class="grad">have a go</span></h2>
+    <p class="sec-sub">A tiny game, built into the site. Arrow keys or WASD — or tap the pad on your phone.</p>
+    <div class="card reveal game-card">
+      <canvas id="snake" width="320" height="320" aria-label="Snake game"></canvas>
+      <div class="game-side">
+        <div class="score"><span id="snakeScore">0</span><small>Score · Best: <span id="snakeBest">0</span></small></div>
+        <p style="color:var(--muted);margin-top:10px">Eat the dots, don't hit the walls or yourself. The snake gets faster as you score — a bit like shipping software.</p>
+        <div class="cta">
+          <button class="btn primary" id="snakeStart" type="button">▶ Start game</button>
+        </div>
+        <div class="pad" aria-label="Direction pad">
+          <span></span><button type="button" data-dir="up">↑</button><span></span>
+          <button type="button" data-dir="left">←</button><span></span><button type="button" data-dir="right">→</button>
+          <span></span><button type="button" data-dir="down">↓</button><span></span>
+        </div>
+        <p id="snakeMsg" style="color:var(--muted);margin-top:12px;font-size:.9rem">Press start, then use your keyboard.</p>
+      </div>
+    </div>
+  </section>
+
   <section id="about" class="about">
     <h2>About <span class="grad">me</span></h2>
     <p>I'm <b>Ravi Yadav</b> — most people online know me as <b>thor</b>. I'm a developer from <b>Nepal</b> who believes good tools should be open, honest, and radically simple.</p>
@@ -203,11 +298,258 @@
   </footer>
 
 </div>
+
+<!-- search palette -->
+<div class="palette" id="palette" role="dialog" aria-label="Search">
+  <div class="palette-box">
+    <input id="paletteInput" type="text" placeholder="Search projects, skills, qualifications…" autocomplete="off">
+    <div class="palette-results" id="paletteResults"></div>
+    <div class="palette-hint">↑ ↓ to move · Enter to open · Esc to close</div>
+  </div>
+</div>
+
+<!-- Ask Ravi chat -->
+<button class="chat-fab" id="chatFab" type="button" aria-label="Ask Ravi">💬</button>
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Ask Ravi">
+  <div class="chat-head">
+    <div><b>Ask Ravi</b><span>Answers from this site — runs in your browser, nothing leaves it</span></div>
+    <button id="chatClose" type="button" aria-label="Close chat">✕</button>
+  </div>
+  <div class="chat-log" id="chatLog"></div>
+  <div class="chips" id="chatChips"></div>
+  <form class="chat-input" id="chatForm">
+    <input id="chatText" type="text" placeholder="Ask about a project, skill…" autocomplete="off">
+    <button type="submit">Send</button>
+  </form>
+  <div class="chat-note">A small on-page assistant — it only knows what's on this site. For a real conversation, find Ravi on GitHub.</div>
+</div>
+
 <script>
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, {threshold: .12});
   document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 </script>
+
+<script>
+/* ---------- site search (Ctrl+K) ---------- */
+var SEARCH_INDEX = [
+  {t:"NepPay", k:"Project", d:"GPay-smooth payment app for Nepal — NEPALPAY QR, FonePay QR, Flutter + double-entry ledger.", target:"#projects"},
+  {t:"SkillVet", k:"Project", d:"Zero-dependency scanner that vets AI agent skills for prompt injection and secret theft.", target:"#projects"},
+  {t:"CtrlZ", k:"Project", d:"Ctrl+Z for AI agents — filesystem snapshots that undo everything an agent did.", target:"#projects"},
+  {t:"ProofLog", k:"Project", d:"Tamper-evident audit log — SHA-256 hash chain, one zero-dependency Python file.", target:"#projects"},
+  {t:"Aura Scanner", k:"Project", d:"For-fun Android app — aura score, aura type and a roast. Kotlin + Jetpack Compose.", target:"#projects"},
+  {t:"Graphify — fix landed in v0.9.95", k:"Open source", d:"MySQL CREATE TABLE fix cherry-picked by the maintainer into graphify 0.9.95 on PyPI.", target:"#opensource"},
+  {t:"Open-source contributions", k:"Open source", d:"Security & bug-fix PRs at ColossalAI, ECC, ponytail, nanobot (×2), FastMCP, hermes-agent and portless.", target:"#opensource"},
+  {t:"Flutter / Dart", k:"Skill", d:"Cross-platform apps — NepPay is built with Flutter.", target:"#skills"},
+  {t:"Kotlin · Jetpack Compose", k:"Skill", d:"Native Android — Aura Scanner.", target:"#skills"},
+  {t:"Python", k:"Skill", d:"SkillVet, CtrlZ and ProofLog are all Python.", target:"#skills"},
+  {t:"Node.js", k:"Skill", d:"NepPay's double-entry ledger backend.", target:"#skills"},
+  {t:"TypeScript", k:"Skill", d:"In the toolbox, alongside Node.js and REST APIs.", target:"#skills"},
+  {t:"Android", k:"Skill", d:"Kotlin + Jetpack Compose, Play Store apps.", target:"#skills"},
+  {t:"REST APIs", k:"Skill", d:"API design for apps and backends.", target:"#skills"},
+  {t:"Git & GitHub", k:"Skill", d:"On GitHub since 2019 — github.com/08raviyadav.", target:"#skills"},
+  {t:"AI tooling & agents", k:"Skill", d:"Building safety nets for AI agents — CtrlZ, SkillVet.", target:"#skills"},
+  {t:"BCA — Bachelor of Computer Applications", k:"Qualification", d:"Lovely Professional University, Phagwara, Punjab, India. Completed 2020, CGPA 7.30.", target:"#qualifications"},
+  {t:"Open-source developer since 2019", k:"Qualification", d:"Building in public on GitHub since 2019, one fix landed on PyPI.", target:"#qualifications"},
+  {t:"Indie builder", k:"Qualification", d:"Shipped NepPay, SkillVet, CtrlZ and ProofLog in 2026, plus Aura Scanner.", target:"#qualifications"},
+  {t:"About Ravi", k:"About", d:"Ravi Yadav, known as thor — developer from Nepal. Everything MIT-licensed.", target:"#about"},
+  {t:"Contact — GitHub", k:"Contact", d:"Find Ravi on GitHub — github.com/08raviyadav. He answers every issue and PR.", target:"#about"}
+];
+var palette = document.getElementById('palette');
+var paletteInput = document.getElementById('paletteInput');
+var paletteResults = document.getElementById('paletteResults');
+var activeRes = 0, currentResults = [];
+function openPalette(){ palette.classList.add('open'); paletteInput.value=''; renderResults(''); paletteInput.focus(); }
+function closePalette(){ palette.classList.remove('open'); }
+function renderResults(q){
+  q = (q||'').trim().toLowerCase();
+  currentResults = q ? SEARCH_INDEX.filter(function(e){ return (e.t+' '+e.k+' '+e.d).toLowerCase().indexOf(q) !== -1; })
+                     : SEARCH_INDEX.slice(0, 7);
+  activeRes = 0;
+  if(!currentResults.length){ paletteResults.innerHTML = '<div class="none">Nothing found for “'+q+'”. Try “NepPay”, “Python” or “BCA”.</div>'; return; }
+  paletteResults.innerHTML = currentResults.map(function(e,i){
+    return '<a class="res'+(i===0?' active':'')+'" data-i="'+i+'"><div class="k">'+e.k+'</div><div class="t">'+e.t+'</div><div class="d">'+e.d+'</div></a>';
+  }).join('');
+}
+function goToResult(i){
+  var e = currentResults[i]; if(!e) return;
+  closePalette();
+  var el = document.querySelector(e.target);
+  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+document.getElementById('searchBtn').addEventListener('click', openPalette);
+palette.addEventListener('click', function(e){ if(e.target === palette) closePalette(); });
+paletteResults.addEventListener('click', function(e){
+  var r = e.target.closest('.res'); if(r) goToResult(parseInt(r.getAttribute('data-i'),10));
+});
+paletteInput.addEventListener('input', function(){ renderResults(paletteInput.value); });
+document.addEventListener('keydown', function(e){
+  if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){ e.preventDefault(); palette.classList.contains('open') ? closePalette() : openPalette(); }
+  else if(e.key === '/' && !palette.classList.contains('open') && document.activeElement.tagName !== 'INPUT'){ e.preventDefault(); openPalette(); }
+  else if(e.key === 'Escape'){ closePalette(); document.getElementById('chatPanel').classList.remove('open'); }
+  else if(palette.classList.contains('open') && (e.key === 'ArrowDown' || e.key === 'ArrowUp')){
+    e.preventDefault();
+    activeRes = e.key === 'ArrowDown' ? Math.min(activeRes+1, currentResults.length-1) : Math.max(activeRes-1, 0);
+    var nodes = paletteResults.querySelectorAll('.res');
+    nodes.forEach(function(n,i){ n.classList.toggle('active', i===activeRes); });
+  }
+  else if(palette.classList.contains('open') && e.key === 'Enter'){ goToResult(activeRes); }
+});
+</script>
+
+<script>
+/* ---------- Snake (playground) ---------- */
+(function(){
+  var canvas = document.getElementById('snake');
+  var ctx = canvas.getContext('2d');
+  var scoreEl = document.getElementById('snakeScore');
+  var bestEl = document.getElementById('snakeBest');
+  var msgEl = document.getElementById('snakeMsg');
+  var startBtn = document.getElementById('snakeStart');
+  var CELL = 20, COLS = 16, ROWS = 16;
+  var snake, dir, nextDir, food, score, best, timer, running;
+  try { best = parseInt(localStorage.getItem('ravi-snake-best') || '0', 10) || 0; } catch(e){ best = 0; }
+  bestEl.textContent = best;
+  function reset(){
+    snake = [{x:8,y:8},{x:7,y:8},{x:6,y:8}];
+    dir = {x:1,y:0}; nextDir = dir; score = 0; scoreEl.textContent = '0';
+    placeFood(); draw();
+  }
+  function placeFood(){
+    while(true){
+      food = {x: Math.floor(Math.random()*COLS), y: Math.floor(Math.random()*ROWS)};
+      if(!snake.some(function(s){ return s.x===food.x && s.y===food.y; })) return;
+    }
+  }
+  function draw(){
+    ctx.fillStyle = '#05070d'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath(); ctx.arc(food.x*CELL+CELL/2, food.y*CELL+CELL/2, 7, 0, Math.PI*2); ctx.fill();
+    snake.forEach(function(s,i){
+      ctx.fillStyle = i===0 ? '#22d3ee' : '#6e7cff';
+      ctx.fillRect(s.x*CELL+1, s.y*CELL+1, CELL-2, CELL-2);
+    });
+  }
+  function step(){
+    dir = nextDir;
+    var head = {x: snake[0].x + dir.x, y: snake[0].y + dir.y};
+    if(head.x<0 || head.y<0 || head.x>=COLS || head.y>=ROWS || snake.some(function(s){ return s.x===head.x && s.y===head.y; })){
+      stop('Game over — you scored '+score+'. Press Start to play again.');
+      return;
+    }
+    snake.unshift(head);
+    if(head.x===food.x && head.y===food.y){
+      score++; scoreEl.textContent = score;
+      if(score>best){ best=score; bestEl.textContent=best; try{ localStorage.setItem('ravi-snake-best', String(best)); }catch(e){} }
+      placeFood();
+      clearInterval(timer); timer = setInterval(step, Math.max(70, 150 - score*5));
+    } else { snake.pop(); }
+    draw();
+  }
+  function start(){
+    reset(); running = true; msgEl.textContent = 'Playing — arrow keys / WASD / pad.';
+    startBtn.textContent = '↻ Restart';
+    clearInterval(timer); timer = setInterval(step, 150);
+  }
+  function stop(msg){
+    running = false; clearInterval(timer); msgEl.textContent = msg;
+    startBtn.textContent = '▶ Play again';
+  }
+  function setDir(x,y){
+    if(!running) return;
+    if(x===-dir.x && y===-dir.y) return;
+    nextDir = {x:x, y:y};
+  }
+  startBtn.addEventListener('click', start);
+  document.querySelectorAll('.pad button').forEach(function(b){
+    b.addEventListener('click', function(){
+      var d = b.getAttribute('data-dir');
+      if(d==='up') setDir(0,-1); if(d==='down') setDir(0,1);
+      if(d==='left') setDir(-1,0); if(d==='right') setDir(1,0);
+    });
+  });
+  document.addEventListener('keydown', function(e){
+    if(!running) return;
+    var k = e.key.toLowerCase();
+    if(k==='arrowup'||k==='w'){ e.preventDefault(); setDir(0,-1); }
+    if(k==='arrowdown'||k==='s'){ e.preventDefault(); setDir(0,1); }
+    if(k==='arrowleft'||k==='a'){ e.preventDefault(); setDir(-1,0); }
+    if(k==='arrowright'||k==='d'){ e.preventDefault(); setDir(1,0); }
+  });
+  reset();
+})();
+</script>
+
+<script>
+/* ---------- Ask Ravi (on-page assistant — no server, no key) ---------- */
+(function(){
+  var fab = document.getElementById('chatFab');
+  var panel = document.getElementById('chatPanel');
+  var log = document.getElementById('chatLog');
+  var form = document.getElementById('chatForm');
+  var input = document.getElementById('chatText');
+  var chips = document.getElementById('chatChips');
+  var greeted = false;
+  var KB = [
+    {keys:['neppay','payment','pay','fonepay','nepalpay','qr'], a:'<b>NepPay</b> is Ravi\u2019s payment app for Nepal — GPay-smooth, built on Nepal\u2019s own rails (NEPALPAY QR, FonePay QR and NPI). Flutter app + a Node.js double-entry ledger backend where a retry can never double-charge. It\u2019s open source: <a href="https://github.com/08raviyadav/Neppay" target="_blank" rel="noopener">github.com/08raviyadav/Neppay</a>'},
+    {keys:['skillvet','skill','vet','security scan','scanner'], a:'<b>SkillVet</b> vets AI agent skills before you install them — a zero-dependency Python scanner that flags prompt injection, secret theft and <i>curl | sh</i> in skills &amp; MCP configs, with a 0–100 score and a GitHub Action. <a href="https://github.com/08raviyadav/skillvet" target="_blank" rel="noopener">github.com/08raviyadav/skillvet</a>'},
+    {keys:['ctrlz','ctrl','undo','snapshot'], a:'<b>CtrlZ</b> is Ctrl+Z for AI agents — filesystem snapshots that undo everything an agent did, including bash <i>rm</i>, subagent edits and deleted .env files that built-in checkpoints never see. <a href="https://github.com/08raviyadav/ctrlz" target="_blank" rel="noopener">github.com/08raviyadav/ctrlz</a>'},
+    {keys:['prooflog','proof','audit','tamper'], a:'<b>ProofLog</b> is a tamper-evident audit log — one zero-dependency Python file that chains every record to the last with SHA-256, so a changed, deleted or reordered entry breaks verification and names the broken entry. <a href="https://github.com/08raviyadav/ProofLog" target="_blank" rel="noopener">github.com/08raviyadav/ProofLog</a>'},
+    {keys:['aura','scanner','selfie','roast'], a:'<b>Aura Scanner</b> is a for-fun Android app: snap a selfie, get your aura score, aura type and a loving roast, with shareable result cards. 100% offline, no login, Kotlin + Jetpack Compose. Coming to the Play Store.'},
+    {keys:['graphify','landed','merged','pypi'], a:'Ravi\u2019s first landed contribution: a Graphify fix for MySQL <i>CREATE TABLE</i> statements silently dropped by the SQL parser. The maintainer cherry-picked it into <b>graphify 0.9.95 on PyPI</b> — \u201ccherry-picked to preserve your authorship.\u201d'},
+    {keys:['contribut','open source','pr','pull request'], a:'Beyond his own repos, Ravi fixes real bugs in other tools — open PRs at ColossalAI, ECC, ponytail, nanobot (×2), FastMCP, hermes-agent and portless, plus the landed Graphify fix in v0.9.95. See the Open Source section above.'},
+    {keys:['skill','stack','language','flutter','python','kotlin','typescript','node'], a:'Ravi builds with Flutter/Dart, Kotlin + Jetpack Compose, Python, Node.js and TypeScript — plus Android, REST APIs and Git/GitHub. See the Skills section.'},
+    {keys:['bca','degree','education','university','qualification','college','cgpa','study'], a:'Ravi holds a <b>BCA (Bachelor of Computer Applications)</b> from Lovely Professional University, Phagwara, Punjab, India — completed 2020, CGPA 7.30.'},
+    {keys:['experience','since','how long','background'], a:'Ravi has been building in public on GitHub since <b>2019</b>, and shipped NepPay, SkillVet, CtrlZ and ProofLog as open-source projects in 2026.'},
+    {keys:['contact','email','hire','collaborat','talk','reach','message'], a:'The best way to reach Ravi is on GitHub — <a href="https://github.com/08raviyadav" target="_blank" rel="noopener">github.com/08raviyadav</a>. He answers every issue and PR.'},
+    {keys:['who','about','thor','ravi','yourself'], a:'Ravi Yadav — online as <b>thor</b> — is a developer from Nepal who builds open-source tools: payments for Nepal (NepPay), safety nets for AI agents (CtrlZ) and security for the skill ecosystem (SkillVet). Everything MIT-licensed.'},
+    {keys:['game','snake','play','fun'], a:'There\u2019s a Snake game in the Playground section above — arrow keys or WASD, or the on-screen pad on your phone. Your best score is saved in your browser.'},
+    {keys:['hello','hi','hey','namaste'], a:'Namaste! Ask me about Ravi\u2019s projects, skills, qualifications or open-source work — or try a chip below.'}
+  ];
+  var CHIP_QS = ['What is NepPay?', 'What skills does Ravi have?', 'What is his qualification?', 'How do I contact him?'];
+  function addMsg(html, who){
+    var d = document.createElement('div');
+    d.className = 'msg ' + who; d.innerHTML = html;
+    log.appendChild(d); log.scrollTop = log.scrollHeight;
+  }
+  function answer(q){
+    var s = q.toLowerCase();
+    for(var i=0;i<KB.length;i++){
+      for(var j=0;j<KB[i].keys.length;j++){
+        if(s.indexOf(KB[i].keys[j]) !== -1) return KB[i].a;
+      }
+    }
+    return 'I only know what\u2019s on this site — try asking about <b>NepPay</b>, <b>SkillVet</b>, <b>CtrlZ</b>, Ravi\u2019s <b>skills</b> or his <b>qualification</b>. Or use the search (Ctrl+K) at the top.';
+  }
+  function ask(q){
+    if(!q) return;
+    addMsg(q.replace(/</g,'&lt;'), 'user');
+    setTimeout(function(){ addMsg(answer(q), 'bot'); }, 250);
+  }
+  function openChat(){
+    panel.classList.add('open');
+    if(!greeted){
+      greeted = true;
+      addMsg('Namaste! I\u2019m Ask Ravi — I can tell you about Ravi\u2019s projects, skills, qualifications and open-source work. What would you like to know?', 'bot');
+      CHIP_QS.forEach(function(q){
+        var b = document.createElement('button');
+        b.type = 'button'; b.textContent = q;
+        b.addEventListener('click', function(){ ask(q); });
+        chips.appendChild(b);
+      });
+    }
+    input.focus();
+  }
+  fab.addEventListener('click', function(){ panel.classList.contains('open') ? panel.classList.remove('open') : openChat(); });
+  document.getElementById('chatClose').addEventListener('click', function(){ panel.classList.remove('open'); });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var q = input.value.trim(); input.value = '';
+    ask(q);
+  });
+})();
+</script>
+
 </body>
 </html>
