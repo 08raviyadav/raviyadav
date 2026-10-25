@@ -52,7 +52,7 @@
   h2{font-size:1.9rem;font-weight:800;letter-spacing:-.5px;margin-bottom:8px}
   h2 .grad{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
   .sec-sub{color:var(--muted);margin-bottom:30px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:20px}
   .card{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:var(--radius);padding:26px;transition:transform .18s ease,border-color .18s ease}
   .card:hover{transform:translateY(-5px);border-color:var(--accent)}
   .card .icon{font-size:1.9rem}
@@ -114,14 +114,16 @@
   .chat-input input{flex:1;padding:13px 14px;background:transparent;border:none;color:var(--text);outline:none;font-family:inherit;font-size:.95rem}
   .chat-input button{padding:0 18px;background:none;border:none;color:var(--accent2);font-weight:700;cursor:pointer;font-family:inherit}
   .chat-note{padding:8px 14px;font-size:.72rem;color:var(--muted);border-top:1px solid var(--line)}
-  @media (max-width:640px){ nav .links{display:none} .hero{padding-top:44px} .search-btn{margin-left:auto} }
+  @media (max-width:640px){ nav .links{display:none} .hero{padding-top:44px} .search-btn{margin-left:auto} .search-btn kbd{display:none} section{padding:44px 0 8px} h2{font-size:1.6rem} .card{padding:20px} .stats{gap:22px;margin-top:34px} .sub{font-size:.98rem} }
 
-  /* Featured projects carousel — one card at a time, neighbours peeking */
+  /* Featured projects carousel — native swipe + snap, one card at a time */
   .carousel{position:relative;max-width:880px;margin:0 auto}
-  .car-viewport{overflow:hidden;border-radius:var(--radius)}
-  .car-track{display:flex;gap:20px;padding:14px 0;transition:transform .5s ease}
-  .car-track .card{flex:0 0 auto;width:calc(100% - 90px);transition:opacity .6s ease,transform .18s ease,border-color .18s ease,background .25s ease,box-shadow .25s ease}
+  .car-viewport{overflow-x:auto;overflow-y:hidden;border-radius:var(--radius);scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .car-viewport::-webkit-scrollbar{display:none}
+  .car-track{display:flex;gap:20px;padding:14px 0}
+  .car-track .card{flex:0 0 auto;width:calc(100% - 90px);scroll-snap-align:center;transition:opacity .6s ease,transform .18s ease,border-color .18s ease,background .25s ease,box-shadow .25s ease}
   .car-track .card:hover{transform:translateY(-4px);background:linear-gradient(180deg,#1a2340,#111a2e);border-color:var(--accent);box-shadow:0 10px 26px rgba(110,124,255,.22)}
+  .car-pad{flex:0 0 45px}
   .car-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:rgba(14,20,36,.94);color:var(--text);font-size:1.7rem;line-height:1;cursor:pointer;transition:border-color .18s ease,color .18s ease;box-shadow:0 6px 18px rgba(0,0,0,.45)}
   .car-arrow:hover{border-color:var(--accent);color:var(--accent2)}
   .car-arrow.prev{left:0}
@@ -129,7 +131,7 @@
   .car-dots{display:flex;gap:8px;justify-content:center;margin-top:18px}
   .car-dot{width:9px;height:9px;border-radius:50%;border:0;background:var(--line);cursor:pointer;padding:0;transition:transform .18s ease,background .18s ease}
   .car-dot.on{background:var(--accent2);transform:scale(1.3)}
-  @media (max-width:600px){.car-track{gap:16px}.car-track .card{width:calc(100% - 76px)}.car-arrow{width:38px;height:38px;font-size:1.4rem}}
+  @media (max-width:600px){.car-track{gap:16px}.car-track .card{width:calc(100% - 76px)}.car-pad{flex-basis:38px}.car-arrow{width:38px;height:38px;font-size:1.4rem}}
 </style>
 </head>
 <body>
@@ -176,7 +178,8 @@
     <p class="sec-sub">Real tools, live on GitHub — swipe or tap the arrows to explore them one by one.</p>
     <div class="carousel" id="projCarousel">
       <button class="car-arrow prev" id="carPrev" aria-label="Previous project">‹</button>
-      <div class="car-viewport"><div class="car-track">
+      <div class="car-viewport" tabindex="0"><div class="car-track">
+      <i class="car-pad" aria-hidden="true"></i>
 
       <article class="card car-slide reveal">
         <div class="icon">💸</div>
@@ -218,6 +221,7 @@
         <span class="repo">Coming to the Play Store</span>
       </article>
 
+      <i class="car-pad" aria-hidden="true"></i>
       </div></div>
       <button class="car-arrow next" id="carNext" aria-label="Next project">›</button>
     </div>
@@ -624,46 +628,50 @@ document.addEventListener('keydown', function(e){
 
 <script>
 (function(){
-  var track=document.querySelector('#projCarousel .car-track');
-  if(!track) return;
   var viewport=document.querySelector('#projCarousel .car-viewport');
-  var slides=track.children.length, i=0, timer=null;
+  var track=document.querySelector('#projCarousel .car-track');
+  if(!viewport||!track) return;
+  var slides=track.querySelectorAll('.car-slide');
+  var n=slides.length, cur=0;
   var dotsBox=document.getElementById('carDots');
-  for(var d=0;d<slides;d++){
+  for(var d=0;d<n;d++){
     var b=document.createElement('button');
     b.className='car-dot'; b.setAttribute('aria-label','Go to project '+(d+1));
-    (function(n){ b.addEventListener('click',function(){ go(n); restart(); }); })(d);
+    (function(k){ b.addEventListener('click',function(){ go(k); }); })(d);
     dotsBox.appendChild(b);
   }
   var dots=dotsBox.children;
-  function metrics(){
+  function step(){
     var gap=parseFloat(getComputedStyle(track).gap)||20;
-    var sw=track.children[0].offsetWidth;
-    var vw=viewport.clientWidth;
-    return {off:(vw-sw-gap)/2, step:sw+gap};
+    return slides[0].offsetWidth+gap;
   }
-  function go(n){
-    i=(n+slides)%slides;
-    var m=metrics();
-    track.style.transform='translateX('+(m.off - i*m.step)+'px)';
-    for(var k=0;k<slides;k++) dots[k].classList.toggle('on', k===i);
+  function go(k){
+    cur=((k%n)+n)%n;
+    viewport.scrollTo({left:cur*step(), behavior:'smooth'});
+    paint();
   }
-  window.addEventListener('resize',function(){ go(i); });
-  function restart(){ clearInterval(timer); timer=setInterval(function(){ go(i+1); }, 5000); }
-  document.getElementById('carPrev').addEventListener('click',function(){ go(i-1); restart(); });
-  document.getElementById('carNext').addEventListener('click',function(){ go(i+1); restart(); });
-  var car=document.getElementById('projCarousel');
-  car.addEventListener('mouseenter',function(){ clearInterval(timer); });
-  car.addEventListener('mouseleave',restart);
-  var sx=null;
-  car.addEventListener('touchstart',function(e){ sx=e.touches[0].clientX; clearInterval(timer); },{passive:true});
-  car.addEventListener('touchend',function(e){
-    if(sx===null) return;
-    var dx=e.changedTouches[0].clientX-sx;
-    if(Math.abs(dx)>40) go(i+(dx<0?1:-1));
-    sx=null; restart();
+  function paint(){
+    for(var j=0;j<n;j++) dots[j].classList.toggle('on', j===cur);
+  }
+  function sync(){
+    var s=step();
+    var k=Math.round(viewport.scrollLeft/s);
+    if(k<0) k=0; if(k>n-1) k=n-1;
+    if(k!==cur){ cur=k; paint(); }
+  }
+  var raf=null;
+  viewport.addEventListener('scroll',function(){
+    if(raf) return;
+    raf=requestAnimationFrame(function(){ raf=null; sync(); });
   },{passive:true});
-  go(0); restart();
+  document.getElementById('carPrev').addEventListener('click',function(){ go(cur-1); });
+  document.getElementById('carNext').addEventListener('click',function(){ go(cur+1); });
+  viewport.addEventListener('keydown',function(e){
+    if(e.key==='ArrowLeft'){ e.preventDefault(); go(cur-1); }
+    if(e.key==='ArrowRight'){ e.preventDefault(); go(cur+1); }
+  });
+  window.addEventListener('resize',function(){ viewport.scrollTo({left:cur*step()}); });
+  paint();
 })();
 </script>
 </body>
