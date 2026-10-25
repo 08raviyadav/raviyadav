@@ -131,6 +131,7 @@
   .car-dots{display:flex;gap:8px;justify-content:center;margin-top:18px}
   .car-dot{width:9px;height:9px;border-radius:50%;border:0;background:var(--line);cursor:pointer;padding:0;transition:transform .18s ease,background .18s ease}
   .car-dot.on{background:var(--accent2);transform:scale(1.3)}
+  .carousel.slim{max-width:600px}
   @media (max-width:600px){.car-track{gap:16px}.car-track .card{width:calc(100% - 76px)}.car-pad{flex-basis:38px}.car-arrow{width:38px;height:38px;font-size:1.4rem}}
 </style>
 </head>
@@ -177,7 +178,7 @@
     <h2>Featured <span class="grad">projects</span></h2>
     <p class="sec-sub">Real tools, live on GitHub — swipe or tap the arrows to explore them one by one.</p>
     <div class="carousel" id="projCarousel">
-      <button class="car-arrow prev" id="carPrev" aria-label="Previous project">‹</button>
+      <button class="car-arrow prev" aria-label="Previous project">‹</button>
       <div class="car-viewport" tabindex="0"><div class="car-track">
       <i class="car-pad" aria-hidden="true"></i>
 
@@ -223,9 +224,9 @@
 
       <i class="car-pad" aria-hidden="true"></i>
       </div></div>
-      <button class="car-arrow next" id="carNext" aria-label="Next project">›</button>
+      <button class="car-arrow next" aria-label="Next project">›</button>
     </div>
-    <div class="car-dots" id="carDots"></div>
+    <div class="car-dots"></div>
   </section>
 
   <section id="opensource">
@@ -266,34 +267,46 @@
 
   <section id="qualifications">
     <h2>Qualifications &amp; <span class="grad">experience</span></h2>
-    <p class="sec-sub">The paper trail — and the work behind it.</p>
-    <div class="grid">
-      <article class="card reveal">
+    <p class="sec-sub">The paper trail — and the work behind it. Swipe or tap the arrows to explore.</p>
+    <div class="carousel" id="qualCarousel">
+      <button class="car-arrow prev" aria-label="Previous">‹</button>
+      <div class="car-viewport" tabindex="0"><div class="car-track">
+      <i class="car-pad" aria-hidden="true"></i>
+
+      <article class="card car-slide reveal">
         <div class="icon">🎓</div>
         <h3>Bachelor of Computer Applications (BCA)</h3>
         <p>Lovely Professional University, Phagwara, Punjab, India. Completed 2020 · CGPA 7.30.</p>
         <div class="tags"><span class="tag">BCA</span><span class="tag">2020</span><span class="tag">CGPA 7.30</span></div>
       </article>
-      <article class="card reveal">
+      <article class="card car-slide reveal">
         <div class="icon">💻</div>
         <h3>Open-source developer since 2019</h3>
         <p>Building in public on GitHub since 2019. One fix landed in production (Graphify 0.9.95 on PyPI), with security &amp; bug-fix PRs open across ColossalAI, ECC, ponytail, nanobot, FastMCP, hermes-agent and portless.</p>
         <div class="tags"><span class="tag">GitHub since 2019</span><span class="tag">Open Source</span></div>
       </article>
-      <article class="card reveal">
+      <article class="card car-slide reveal">
         <div class="icon">📱</div>
         <h3>Indie builder</h3>
         <p>Shipped NepPay, SkillVet, CtrlZ and ProofLog as open-source projects in 2026, plus Aura Scanner for Android. Flutter, Kotlin and Python — always MIT-licensed, always in the open.</p>
         <div class="tags"><span class="tag">Flutter</span><span class="tag">Kotlin</span><span class="tag">Python</span></div>
       </article>
+      <i class="car-pad" aria-hidden="true"></i>
+      </div></div>
+      <button class="car-arrow next" aria-label="Next">›</button>
     </div>
+    <div class="car-dots"></div>
   </section>
 
   <section id="cases">
     <h2>Case <span class="grad">studies</span></h2>
-    <p class="sec-sub">What shipping with me looks like — problem, fix, result.</p>
-    <div class="grid">
-      <article class="card reveal">
+    <p class="sec-sub">What shipping with me looks like — problem, fix, result. Swipe or tap the arrows.</p>
+    <div class="carousel slim" id="caseCarousel">
+      <button class="car-arrow prev" aria-label="Previous">‹</button>
+      <div class="car-viewport" tabindex="0"><div class="car-track">
+      <i class="car-pad" aria-hidden="true"></i>
+
+      <article class="card car-slide reveal">
         <div class="icon">🏆</div>
         <h3>Graphify — the fix that shipped on PyPI</h3>
         <p><b style="color:var(--text)">Problem:</b> MySQL/MariaDB <i>CREATE TABLE</i> statements with <i>DEFAULT current_timestamp()</i> were silently dropped — the SQL parser hit an ERROR node and threw away the whole table.</p>
@@ -301,7 +314,7 @@
         <p style="margin-top:10px"><b style="color:var(--text)">Result:</b> Maintainer cherry-picked the fix into <b>graphify 0.9.95 on PyPI</b> — "cherry-picked to preserve your authorship." My commit is on upstream main.</p>
         <a class="repo" href="https://github.com/Graphify-Labs/graphify/pull/4677" target="_blank" rel="noopener">View pull request →</a>
       </article>
-      <article class="card reveal">
+      <article class="card car-slide reveal">
         <div class="icon">💸</div>
         <h3>NepPay — payments that never double-charge</h3>
         <p><b style="color:var(--text)">Problem:</b> Payments in Nepal feel clunky compared to GPay/PhonePe — and a retried payment must never charge twice.</p>
@@ -309,7 +322,11 @@
         <p style="margin-top:10px"><b style="color:var(--text)">Result:</b> A working V0 prototype, open source, with the retry-safety proven live: same key, same transaction, charged once.</p>
         <a class="repo" href="https://github.com/08raviyadav/Neppay" target="_blank" rel="noopener">View repository →</a>
       </article>
+      <i class="car-pad" aria-hidden="true"></i>
+      </div></div>
+      <button class="car-arrow next" aria-label="Next">›</button>
     </div>
+    <div class="car-dots"></div>
   </section>
 
   <section id="resume">
@@ -628,50 +645,56 @@ document.addEventListener('keydown', function(e){
 
 <script>
 (function(){
-  var viewport=document.querySelector('#projCarousel .car-viewport');
-  var track=document.querySelector('#projCarousel .car-track');
-  if(!viewport||!track) return;
-  var slides=track.querySelectorAll('.car-slide');
-  var n=slides.length, cur=0;
-  var dotsBox=document.getElementById('carDots');
-  for(var d=0;d<n;d++){
-    var b=document.createElement('button');
-    b.className='car-dot'; b.setAttribute('aria-label','Go to project '+(d+1));
-    (function(k){ b.addEventListener('click',function(){ go(k); }); })(d);
-    dotsBox.appendChild(b);
-  }
-  var dots=dotsBox.children;
-  function step(){
-    var gap=parseFloat(getComputedStyle(track).gap)||20;
-    return slides[0].offsetWidth+gap;
-  }
-  function go(k){
-    cur=((k%n)+n)%n;
-    viewport.scrollTo({left:cur*step(), behavior:'smooth'});
+  function init(root){
+    var viewport=root.querySelector('.car-viewport');
+    var track=root.querySelector('.car-track');
+    if(!viewport||!track) return;
+    var slides=track.querySelectorAll('.car-slide');
+    var n=slides.length, cur=0;
+    if(n<2) return;
+    var dotsBox=root.nextElementSibling;
+    var dots=[];
+    if(dotsBox && dotsBox.classList.contains('car-dots')){
+      for(var d=0;d<n;d++){
+        var b=document.createElement('button');
+        b.className='car-dot'; b.setAttribute('aria-label','Go to card '+(d+1));
+        (function(k){ b.addEventListener('click',function(){ go(k); }); })(d);
+        dotsBox.appendChild(b); dots.push(b);
+      }
+    }
+    function step(){
+      var gap=parseFloat(getComputedStyle(track).gap)||20;
+      return slides[0].offsetWidth+gap;
+    }
+    function go(k){
+      cur=((k%n)+n)%n;
+      viewport.scrollTo({left:cur*step(), behavior:'smooth'});
+      paint();
+    }
+    function paint(){ for(var j=0;j<n;j++) if(dots[j]) dots[j].classList.toggle('on', j===cur); }
+    function sync(){
+      var s=step();
+      var k=Math.round(viewport.scrollLeft/s);
+      if(k<0) k=0; if(k>n-1) k=n-1;
+      if(k!==cur){ cur=k; paint(); }
+    }
+    var raf=null;
+    viewport.addEventListener('scroll',function(){
+      if(raf) return;
+      raf=requestAnimationFrame(function(){ raf=null; sync(); });
+    },{passive:true});
+    var prev=root.querySelector('.car-arrow.prev');
+    var next=root.querySelector('.car-arrow.next');
+    if(prev) prev.addEventListener('click',function(){ go(cur-1); });
+    if(next) next.addEventListener('click',function(){ go(cur+1); });
+    viewport.addEventListener('keydown',function(e){
+      if(e.key==='ArrowLeft'){ e.preventDefault(); go(cur-1); }
+      if(e.key==='ArrowRight'){ e.preventDefault(); go(cur+1); }
+    });
+    window.addEventListener('resize',function(){ viewport.scrollTo({left:cur*step()}); });
     paint();
   }
-  function paint(){
-    for(var j=0;j<n;j++) dots[j].classList.toggle('on', j===cur);
-  }
-  function sync(){
-    var s=step();
-    var k=Math.round(viewport.scrollLeft/s);
-    if(k<0) k=0; if(k>n-1) k=n-1;
-    if(k!==cur){ cur=k; paint(); }
-  }
-  var raf=null;
-  viewport.addEventListener('scroll',function(){
-    if(raf) return;
-    raf=requestAnimationFrame(function(){ raf=null; sync(); });
-  },{passive:true});
-  document.getElementById('carPrev').addEventListener('click',function(){ go(cur-1); });
-  document.getElementById('carNext').addEventListener('click',function(){ go(cur+1); });
-  viewport.addEventListener('keydown',function(e){
-    if(e.key==='ArrowLeft'){ e.preventDefault(); go(cur-1); }
-    if(e.key==='ArrowRight'){ e.preventDefault(); go(cur+1); }
-  });
-  window.addEventListener('resize',function(){ viewport.scrollTo({left:cur*step()}); });
-  paint();
+  document.querySelectorAll('.carousel').forEach(init);
 })();
 </script>
 </body>
