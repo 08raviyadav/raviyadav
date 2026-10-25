@@ -116,18 +116,20 @@
   .chat-note{padding:8px 14px;font-size:.72rem;color:var(--muted);border-top:1px solid var(--line)}
   @media (max-width:640px){ nav .links{display:none} .hero{padding-top:44px} .search-btn{margin-left:auto} }
 
-  /* Featured projects carousel */
-  .carousel{display:flex;align-items:center;gap:12px;max-width:880px;margin:0 auto}
-  .car-viewport{overflow:hidden;flex:1;min-width:0;border-radius:var(--radius)}
-  .car-track{display:flex;transition:transform .5s ease}
-  .car-track .card{min-width:100%;flex-shrink:0;box-sizing:border-box}
-  .car-track .card:hover{transform:none}
-  .car-arrow{flex-shrink:0;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--text);font-size:1.7rem;line-height:1;cursor:pointer;transition:border-color .18s ease,color .18s ease}
+  /* Featured projects carousel — one card at a time, neighbours peeking */
+  .carousel{position:relative;max-width:880px;margin:0 auto}
+  .car-viewport{overflow:hidden;border-radius:var(--radius)}
+  .car-track{display:flex;gap:20px;padding:14px 0;transition:transform .5s ease}
+  .car-track .card{flex:0 0 auto;width:calc(100% - 90px);transition:opacity .6s ease,transform .18s ease,border-color .18s ease,background .25s ease,box-shadow .25s ease}
+  .car-track .card:hover{transform:translateY(-4px);background:linear-gradient(180deg,#1a2340,#111a2e);border-color:var(--accent);box-shadow:0 10px 26px rgba(110,124,255,.22)}
+  .car-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:rgba(14,20,36,.94);color:var(--text);font-size:1.7rem;line-height:1;cursor:pointer;transition:border-color .18s ease,color .18s ease;box-shadow:0 6px 18px rgba(0,0,0,.45)}
   .car-arrow:hover{border-color:var(--accent);color:var(--accent2)}
+  .car-arrow.prev{left:0}
+  .car-arrow.next{right:0}
   .car-dots{display:flex;gap:8px;justify-content:center;margin-top:18px}
   .car-dot{width:9px;height:9px;border-radius:50%;border:0;background:var(--line);cursor:pointer;padding:0;transition:transform .18s ease,background .18s ease}
   .car-dot.on{background:var(--accent2);transform:scale(1.3)}
-  @media (max-width:600px){.carousel{gap:8px}.car-arrow{width:38px;height:38px;font-size:1.4rem}}
+  @media (max-width:600px){.car-track{gap:16px}.car-track .card{width:calc(100% - 76px)}.car-arrow{width:38px;height:38px;font-size:1.4rem}}
 </style>
 </head>
 <body>
@@ -624,6 +626,7 @@ document.addEventListener('keydown', function(e){
 (function(){
   var track=document.querySelector('#projCarousel .car-track');
   if(!track) return;
+  var viewport=document.querySelector('#projCarousel .car-viewport');
   var slides=track.children.length, i=0, timer=null;
   var dotsBox=document.getElementById('carDots');
   for(var d=0;d<slides;d++){
@@ -633,11 +636,19 @@ document.addEventListener('keydown', function(e){
     dotsBox.appendChild(b);
   }
   var dots=dotsBox.children;
+  function metrics(){
+    var gap=parseFloat(getComputedStyle(track).gap)||20;
+    var sw=track.children[0].offsetWidth;
+    var vw=viewport.clientWidth;
+    return {off:(vw-sw-gap)/2, step:sw+gap};
+  }
   function go(n){
     i=(n+slides)%slides;
-    track.style.transform='translateX(-'+(i*100)+'%)';
+    var m=metrics();
+    track.style.transform='translateX('+(m.off - i*m.step)+'px)';
     for(var k=0;k<slides;k++) dots[k].classList.toggle('on', k===i);
   }
+  window.addEventListener('resize',function(){ go(i); });
   function restart(){ clearInterval(timer); timer=setInterval(function(){ go(i+1); }, 5000); }
   document.getElementById('carPrev').addEventListener('click',function(){ go(i-1); restart(); });
   document.getElementById('carNext').addEventListener('click',function(){ go(i+1); restart(); });
