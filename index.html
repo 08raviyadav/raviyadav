@@ -9,51 +9,59 @@
 <meta property="og:description" content="Building NepPay, SkillVet & CtrlZ in the open, from Nepal.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://raviyadav.com.np">
+<meta name="theme-color" content="#FDF6EC">
+<script>try{if(localStorage.getItem('rv-theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}</script>
 <style>
   :root{
-    --bg:#07090f; --bg2:#0b0f1a; --card:#0e1424; --line:#1c2740;
-    --text:#e8edf7; --muted:#94a3c0; --accent:#6e7cff; --accent2:#22d3ee;
-    --green:#34d399; --radius:18px;
+    --bg:#FDF6EC; --bg2:#FFFDF8; --card:#FFFFFF; --line:#EADFC8;
+    --text:#1C1917; --muted:#78716C; --accent:#EA580C; --accent2:#C2410C;
+    --green:#15803D; --radius:18px;
+    --chip:rgba(28,25,23,.04); --hover:rgba(234,88,12,.08);
+  }
+  [data-theme="dark"]{
+    --bg:#121110; --bg2:#1A1815; --card:#1E1B17; --line:#2E2A25;
+    --text:#F5EFE6; --muted:#A8A29A; --accent:#F97316; --accent2:#FB923C;
+    --green:#4ADE80;
+    --chip:rgba(255,255,255,.05); --hover:rgba(249,115,22,.14);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.6;overflow-x:hidden}
   a{color:inherit;text-decoration:none}
-  .glow{position:fixed;inset:0;pointer-events:none;z-index:0;
-    background:radial-gradient(600px 400px at 15% -5%,rgba(110,124,255,.22),transparent 60%),
-               radial-gradient(700px 500px at 90% 10%,rgba(34,211,238,.12),transparent 60%),
-               radial-gradient(800px 600px at 50% 110%,rgba(52,211,153,.08),transparent 60%)}
+  .glow{display:none}
   .wrap{max-width:1080px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
   nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;gap:14px}
   .logo{font-weight:800;font-size:1.25rem;letter-spacing:.3px}
-  .logo span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .logo span{color:var(--accent)}
   nav .links{display:flex;gap:26px;color:var(--muted);font-size:.95rem;align-items:center}
   nav .links a:hover{color:var(--text)}
-  .search-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.03);color:var(--muted);font-size:.9rem;cursor:pointer;font-family:inherit}
+  .search-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--chip);color:var(--muted);font-size:.9rem;cursor:pointer;font-family:inherit}
   .search-btn:hover{border-color:var(--accent);color:var(--text)}
   .search-btn kbd{font-family:inherit;font-size:.72rem;border:1px solid var(--line);border-radius:6px;padding:1px 6px;color:var(--muted)}
+  .theme-btn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid var(--line);border-radius:50%;background:var(--chip);color:var(--text);font-size:1.05rem;cursor:pointer;flex:none}
+  .theme-btn:hover{border-color:var(--accent)}
   .hero{padding:72px 0 40px;text-align:left}
-  .badge{display:inline-block;padding:6px 14px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.85rem;background:rgba(255,255,255,.02)}
+  .badge{display:inline-block;padding:6px 14px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.85rem;background:var(--chip)}
   .badge b{color:var(--green);font-weight:600}
   h1{font-size:clamp(2.6rem,6.5vw,4.4rem);line-height:1.05;font-weight:900;letter-spacing:-1px;margin:22px 0 6px}
-  h1 .grad{background:linear-gradient(92deg,var(--accent),var(--accent2) 55%,var(--green));-webkit-background-clip:text;background-clip:text;color:transparent}
+  h1 .grad{color:var(--accent)}
   .tagline{font-size:clamp(1.15rem,2.6vw,1.5rem);color:var(--text);font-weight:600;margin-top:10px}
   .sub{color:var(--muted);max-width:640px;margin-top:14px;font-size:1.05rem}
   .cta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
   .btn{padding:13px 26px;border-radius:12px;font-weight:700;font-size:.98rem;transition:transform .15s ease,box-shadow .15s ease}
-  .btn.primary{background:linear-gradient(92deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 8px 30px rgba(110,124,255,.35)}
+  .btn.primary{background:var(--accent);color:#fff;box-shadow:0 8px 24px rgba(234,88,12,.30)}
   .btn.primary:hover{transform:translateY(-2px)}
-  .btn.ghost{border:1px solid var(--line);color:var(--text);background:rgba(255,255,255,.02)}
+  .btn.ghost{border:1px solid var(--line);color:var(--text);background:var(--chip)}
   .btn.ghost:hover{border-color:var(--accent)}
   .stats{display:flex;gap:38px;margin-top:48px;flex-wrap:wrap}
   .stat .num{font-size:1.7rem;font-weight:800}
   .stat .lbl{color:var(--muted);font-size:.88rem}
   section{padding:64px 0 8px}
   h2{font-size:1.9rem;font-weight:800;letter-spacing:-.5px;margin-bottom:8px}
-  h2 .grad{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  h2 .grad{color:var(--accent)}
   .sec-sub{color:var(--muted);margin-bottom:30px}
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:20px}
-  .card{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:var(--radius);padding:26px;transition:transform .18s ease,border-color .18s ease}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;transition:transform .18s ease,border-color .18s ease}
   .card:hover{transform:translateY(-5px);border-color:var(--accent)}
   .card .icon{font-size:1.9rem}
   .card h3{font-size:1.25rem;margin:12px 0 6px;font-weight:800}
@@ -64,7 +72,7 @@
   .card .repo{display:inline-block;margin-top:16px;font-weight:700;color:var(--accent2);font-size:.92rem}
   .card .repo:hover{text-decoration:underline}
   .skills{display:flex;gap:10px;flex-wrap:wrap}
-  .skill{padding:9px 16px;border-radius:999px;background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:.92rem}
+  .skill{padding:9px 16px;border-radius:999px;background:var(--chip);border:1px solid var(--line);font-size:.92rem}
   .about p{color:var(--muted);max-width:720px;margin-bottom:14px}
   .about p b{color:var(--text)}
   footer{margin-top:80px;border-top:1px solid var(--line);padding:34px 0 44px;color:var(--muted);font-size:.92rem;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -72,13 +80,13 @@
   .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
   .reveal.in{opacity:1;transform:none}
   /* --- search palette --- */
-  .palette{position:fixed;inset:0;background:rgba(4,6,12,.72);backdrop-filter:blur(3px);z-index:50;display:none;align-items:flex-start;justify-content:center;padding:14vh 18px 18px}
+  .palette{position:fixed;inset:0;background:rgba(28,25,23,.55);backdrop-filter:blur(3px);z-index:50;display:none;align-items:flex-start;justify-content:center;padding:14vh 18px 18px}
   .palette.open{display:flex}
-  .palette-box{width:100%;max-width:560px;background:var(--bg2);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .palette-box{width:100%;max-width:560px;background:var(--bg2);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 30px 80px rgba(28,25,23,.18)}
   .palette-box input{width:100%;padding:16px 18px;font-size:1.05rem;background:transparent;border:none;border-bottom:1px solid var(--line);color:var(--text);outline:none;font-family:inherit}
   .palette-results{max-height:320px;overflow:auto;padding:8px}
   .palette-results .res{display:block;padding:11px 12px;border-radius:10px;cursor:pointer}
-  .palette-results .res:hover,.palette-results .res.active{background:rgba(110,124,255,.14)}
+  .palette-results .res:hover,.palette-results .res.active{background:var(--hover)}
   .palette-results .res .t{font-weight:700;font-size:.98rem}
   .palette-results .res .k{font-size:.75rem;color:var(--accent2);text-transform:uppercase;letter-spacing:.5px}
   .palette-results .res .d{color:var(--muted);font-size:.88rem}
@@ -86,16 +94,16 @@
   .palette-hint{padding:9px 16px;color:var(--muted);font-size:.78rem;border-top:1px solid var(--line)}
   /* --- playground / snake --- */
   .game-card{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
-  .game-card canvas{background:#05070d;border:1px solid var(--line);border-radius:14px;display:block;max-width:100%}
+  .game-card canvas{background:var(--bg2);border:1px solid var(--line);border-radius:14px;display:block;max-width:100%}
   .game-side{min-width:200px;flex:1}
   .game-side .score{font-size:2rem;font-weight:800}
   .game-side .score small{display:block;font-size:.85rem;color:var(--muted);font-weight:400}
   .pad{display:grid;grid-template-columns:repeat(3,52px);gap:6px;margin-top:16px}
-  .pad button{padding:12px 0;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);border-radius:10px;font-size:1.1rem;cursor:pointer;font-family:inherit}
+  .pad button{padding:12px 0;border:1px solid var(--line);background:var(--chip);color:var(--text);border-radius:10px;font-size:1.1rem;cursor:pointer;font-family:inherit}
   .pad button:hover{border-color:var(--accent)}
   /* --- Ask Ravi chat --- */
-  .chat-fab{position:fixed;right:20px;bottom:20px;z-index:40;width:58px;height:58px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:1.5rem;cursor:pointer;box-shadow:0 10px 30px rgba(110,124,255,.45)}
-  .chat-panel{position:fixed;right:20px;bottom:90px;z-index:40;width:min(360px,calc(100vw - 40px));height:480px;max-height:calc(100vh - 120px);background:var(--bg2);border:1px solid var(--line);border-radius:18px;display:none;flex-direction:column;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .chat-fab{position:fixed;right:20px;bottom:20px;z-index:40;width:58px;height:58px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:1.5rem;cursor:pointer;box-shadow:0 10px 30px rgba(234,88,12,.40)}
+  .chat-panel{position:fixed;right:20px;bottom:90px;z-index:40;width:min(360px,calc(100vw - 40px));height:480px;max-height:calc(100vh - 120px);background:var(--bg2);border:1px solid var(--line);border-radius:18px;display:none;flex-direction:column;overflow:hidden;box-shadow:0 30px 80px rgba(28,25,23,.18)}
   .chat-panel.open{display:flex}
   .chat-head{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
   .chat-head b{font-size:1rem}
@@ -103,12 +111,12 @@
   .chat-head button{background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer}
   .chat-log{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
   .msg{max-width:85%;padding:10px 13px;border-radius:14px;font-size:.92rem;line-height:1.5}
-  .msg.bot{background:rgba(110,124,255,.14);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
-  .msg.user{background:linear-gradient(92deg,var(--accent),var(--accent2));color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+  .msg.bot{background:var(--hover);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
+  .msg.user{background:var(--accent);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
   .msg a{color:var(--accent2);text-decoration:underline}
   .msg.user a{color:#fff}
   .chips{display:flex;gap:6px;flex-wrap:wrap;padding:0 14px 10px}
-  .chips button{font-size:.8rem;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted);cursor:pointer;font-family:inherit}
+  .chips button{font-size:.8rem;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:var(--chip);color:var(--muted);cursor:pointer;font-family:inherit}
   .chips button:hover{color:var(--text);border-color:var(--accent)}
   .chat-input{display:flex;border-top:1px solid var(--line)}
   .chat-input input{flex:1;padding:13px 14px;background:transparent;border:none;color:var(--text);outline:none;font-family:inherit;font-size:.95rem}
@@ -122,9 +130,9 @@
   .car-viewport::-webkit-scrollbar{display:none}
   .car-track{display:flex;gap:20px;padding:14px 0}
   .car-track .card{flex:0 0 auto;width:calc(100% - 90px);scroll-snap-align:center;transition:opacity .6s ease,transform .18s ease,border-color .18s ease,background .25s ease,box-shadow .25s ease}
-  .car-track .card:hover{transform:translateY(-4px);background:linear-gradient(180deg,#1a2340,#111a2e);border-color:var(--accent);box-shadow:0 10px 26px rgba(110,124,255,.22)}
+  .car-track .card:hover{transform:translateY(-4px);background:var(--card);border-color:var(--accent);box-shadow:0 10px 26px rgba(234,88,12,.15)}
   .car-pad{flex:0 0 45px}
-  .car-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:rgba(14,20,36,.94);color:var(--text);font-size:1.7rem;line-height:1;cursor:pointer;transition:border-color .18s ease,color .18s ease;box-shadow:0 6px 18px rgba(0,0,0,.45)}
+  .car-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--bg2);color:var(--text);font-size:1.7rem;line-height:1;cursor:pointer;transition:border-color .18s ease,color .18s ease;box-shadow:0 6px 18px rgba(28,25,23,.18)}
   .car-arrow:hover{border-color:var(--accent);color:var(--accent2)}
   .car-arrow.prev{left:0}
   .car-arrow.next{right:0}
@@ -153,6 +161,7 @@
       <a href="https://github.com/08raviyadav" target="_blank" rel="noopener">GitHub ↗</a>
     </div>
     <button class="search-btn" id="searchBtn" type="button" aria-label="Search this site">🔍 Search <kbd>Ctrl K</kbd></button>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle dark mode">🌙</button>
   </nav>
 
   <header class="hero">
@@ -544,12 +553,18 @@ document.addEventListener('keydown', function(e){
       if(!snake.some(function(s){ return s.x===food.x && s.y===food.y; })) return;
     }
   }
+  function themeColors(){
+    var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    return dark ? {bg:'#171310', food:'#4ADE80', head:'#FB923C', body:'#F97316'}
+                : {bg:'#FFF7E8', food:'#15803D', head:'#C2410C', body:'#EA580C'};
+  }
   function draw(){
-    ctx.fillStyle = '#05070d'; ctx.fillRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle = '#34d399';
+    var c = themeColors();
+    ctx.fillStyle = c.bg; ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = c.food;
     ctx.beginPath(); ctx.arc(food.x*CELL+CELL/2, food.y*CELL+CELL/2, 7, 0, Math.PI*2); ctx.fill();
     snake.forEach(function(s,i){
-      ctx.fillStyle = i===0 ? '#22d3ee' : '#6e7cff';
+      ctx.fillStyle = i===0 ? c.head : c.body;
       ctx.fillRect(s.x*CELL+1, s.y*CELL+1, CELL-2, CELL-2);
     });
   }
@@ -599,6 +614,7 @@ document.addEventListener('keydown', function(e){
     if(k==='arrowleft'||k==='a'){ e.preventDefault(); setDir(-1,0); }
     if(k==='arrowright'||k==='d'){ e.preventDefault(); setDir(1,0); }
   });
+  document.addEventListener('rv-theme', draw);
   reset();
 })();
 </script>
@@ -728,6 +744,26 @@ document.addEventListener('keydown', function(e){
     paint();
   }
   document.querySelectorAll('.carousel').forEach(init);
+})();
+</script>
+
+<script>
+/* ---------- Theme (cream + orange light default, charcoal + orange dark) ---------- */
+(function(){
+  var btn = document.getElementById('themeBtn');
+  function paint(){
+    var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    btn.textContent = dark ? '☀️' : '🌙';
+  }
+  btn.addEventListener('click', function(){
+    var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if(dark){ document.documentElement.removeAttribute('data-theme'); }
+    else { document.documentElement.setAttribute('data-theme','dark'); }
+    try{ localStorage.setItem('rv-theme', dark ? 'light' : 'dark'); }catch(e){}
+    paint();
+    document.dispatchEvent(new Event('rv-theme'));
+  });
+  paint();
 })();
 </script>
 </body>
